@@ -9,10 +9,17 @@ namespace padroes_projeto_api.Controllers;
 [Route("alunos")]
 public class AlunoController : ControllerBase
 {
+    private AlunoService alunoService;
+
+    public AlunoController()
+    {
+        this.alunoService = AlunoService.GetInstance();
+    }
+
     [HttpPost]
     public IActionResult Insert(AlunoEntity alunoEntity)
     {
-        AlunoEntity? result = AlunoService.GetInstance().Insert(alunoEntity);
+        AlunoEntity? result = this.alunoService.Insert(alunoEntity);
 
         if (result != null)
         {
@@ -25,7 +32,7 @@ public class AlunoController : ControllerBase
     [HttpPut("{matricula}")]
     public IActionResult Update([FromRoute] Int32 matricula, AlunoEditView alunoEditView)
     {
-        AlunoEntity? result = AlunoService.GetInstance().Update(new AlunoEntity
+        AlunoEntity? result = this.alunoService.Update(new AlunoEntity
         {
             Matricula = matricula,
             Nome = alunoEditView.Nome
@@ -42,7 +49,7 @@ public class AlunoController : ControllerBase
     [HttpDelete("{matricula}")]
     public IActionResult Delete([FromRoute] Int32 matricula)
     {
-        AlunoEntity? result = AlunoService.GetInstance().Delete(matricula);
+        AlunoEntity? result = this.alunoService.Delete(matricula);
 
         if (result != null)
         {
@@ -55,13 +62,13 @@ public class AlunoController : ControllerBase
     [HttpGet]
     public IEnumerable<AlunoEntity> GetAll()
     {
-        return AlunoService.GetInstance().GetAll();
+        return this.alunoService.GetAll();
     }
 
     [HttpGet("{matricula}")]
     public IActionResult GetByMatricula([FromRoute] Int32 matricula)
     {
-        AlunoEntity? result = AlunoService.GetInstance().Select(matricula);
+        AlunoEntity? result = this.alunoService.Select(matricula);
 
         if (result != null)
         {
