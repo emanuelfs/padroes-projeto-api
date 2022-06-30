@@ -1,0 +1,1 @@
+dotnet new webapi -o padroes-projeto-api --no-https
